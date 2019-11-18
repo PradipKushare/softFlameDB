@@ -11,7 +11,7 @@ const TestSchema = new schema({
 	maximumMarks: {type:Number},
     totalQuestions: {type:Number},
     totalTime: {type:String},
-    isCompleted: {type:String},
+    testStatus: {type:Number},
     created_at:{type:Date,default:Date.now}
 });
 

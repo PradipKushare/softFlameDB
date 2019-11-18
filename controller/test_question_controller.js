@@ -1,4 +1,6 @@
-const mainTestModel = require('../model/test_question_modal').mainTestModel
+const mainTestModel = require('../model/test_question_modal').mainTestModel;
+const userAnsSchema = require('../model/user_answer_given_modal').userAnsSchema;
+
 
 const add_question_test_data = (req,res)=>{
     const questiontest = new mainTestModel();
@@ -7,6 +9,14 @@ const add_question_test_data = (req,res)=>{
         questiontest.question = req.body.question;
         questiontest.options = req.body.options;
         questiontest.correctAns = req.body.correctAns;
+        questiontest.isMarked = req.body.isMarked;
+        questiontest.isAnswered = req.body.isAnswered;
+        questiontest.markAnswered = req.body.markAnswered;
+        questiontest.isRemaining = req.body.isRemaining;
+        questiontest.optionSelected = req.body.optionSelected;
+        questiontest.isCoorectAns = req.body.isCoorectAns;
+        questiontest.questionTime = req.body.questionTime;
+
         questiontest.save((err, testData) => {
         if (err){ throw err;}
         res.json({success : true,data:testData})
@@ -18,8 +28,16 @@ const get_question_test_data = (req,res)=>{
      const questiontest = new mainTestModel();
         questiontest.testId = req.body.testId;
         questiontest.subject = req.body.subject;
+        questiontest.userId = req.body.userId;
 
-     mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}).countDocuments((err, countData) => {
+        console.log('testId:'+req.body.testId);
+        console.log('subject:'+req.body.subject);
+        console.log('userId:'+req.body.userId);
+
+
+
+
+/*     mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}).countDocuments((err, countData) => {
             countData = countData
      mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}, (err, testData) => {
         if (err){ throw err;}
@@ -29,7 +47,7 @@ const get_question_test_data = (req,res)=>{
                 res.json({ success:false,data:[],countData:0 });
              }
             });
-        });
+        });*/
     }
 
     const get_all_question_test_data = (req,res)=>{

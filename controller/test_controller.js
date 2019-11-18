@@ -1,5 +1,14 @@
 const testModel = require('../model/test_modal').testModel
 
+
+const set_test_status= (req,res)=>{
+     var profilepic = '5dd2427ca0a7e6157435ddd1';
+     testModel.findOneAndUpdate({'_id': profilepic}, 
+        {$set: {testStatus:0 }}, function(err,updateData) {
+        res.json({ success:true});
+    });
+ };
+
 const add_test_data = (req,res)=>{
     const test = new testModel();
         test.publishedOn = req.body.publishedOn;
@@ -10,7 +19,7 @@ const add_test_data = (req,res)=>{
         test.testDuration = req.body.testDuration;
         test.totalQuestions = req.body.totalQuestions;
         test.totalTime = req.body.totalTime;
-        test.isCompleted = req.body.isCompleted;
+        test.testStatus = req.body.testStatus;
         test.maximumMarks = req.body.maximumMarks;
 
         test.save((err, testData) => {
@@ -58,5 +67,6 @@ const get_test_data_all = (req,res)=>{
 module.exports = {
     add_test_data,
     get_test_data,
-    get_test_data_all
+    get_test_data_all,
+    set_test_status
 }

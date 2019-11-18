@@ -19,11 +19,9 @@ const add_dashboard_data = (req,res)=>{
 
 const get_dashboard_data = (req,res)=>{
     var sess = req.session;
-    console.log('SESSION LOGIN USER ID IS:'+sess.user_id);
-    
+   
     jwt.verify(req.token, config_secret_key.secret_key, function(err, decoded) {
       if (typeof decoded  !== undefined) {
-        console.log('in successssss')
         dashboardModel.findOne((err, dashboardData) => {
         if (err){ throw err;}
         if (dashboardData) {

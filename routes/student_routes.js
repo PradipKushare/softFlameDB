@@ -10,8 +10,7 @@ var newsPwdCntrl = require('../controller/news_controller');
 var dashboardCntrl = require('../controller/dashboard_controller');
 var testCntrl = require('../controller/test_controller');
 var maintestCntrl = require('../controller/test_question_controller');
-var savequesCntrl = require('../controller/save_ques_response_controller');
-
+var testreportCntrl = require('../controller/testreport_controller');
 
  router.post('/register',registerCntrl.register);
  router.post('/login',loginCntrl.login);
@@ -26,20 +25,16 @@ var savequesCntrl = require('../controller/save_ques_response_controller');
  router.post('/add_dashboard_data',dashboardCntrl.add_dashboard_data);
  router.get('/get_dashboard_data',verifyToken, dashboardCntrl.get_dashboard_data);
 
-  router.post('/add_test_data',testCntrl.add_test_data);
-  router.post('/get_test_data',testCntrl.get_test_data);
-  router.get('/get_test_data_all',testCntrl.get_test_data_all);
+ router.post('/add_test_data',testCntrl.add_test_data);
+ router.post('/get_test_data',testCntrl.get_test_data);
+ router.get('/get_test_data_all',testCntrl.get_test_data_all);
+ router.get('/set_test_status',testCntrl.set_test_status);
 
 
  router.post('/add_news_data',newsPwdCntrl.add_news_data);
-
  router.post('/add_question_test_data',maintestCntrl.add_question_test_data);
  router.post('/get_question_test_data',maintestCntrl.get_question_test_data);
- router.post('/save_question_ansewrs',savequesCntrl.save_question_ansewrs);
- router.post('/get_test_report',savequesCntrl.get_test_report);
+ router.post('/save_question_answers',testreportCntrl.save_question_answers);
+ router.post('/get_test_report',testreportCntrl.get_test_report);
 
-
-
-// router.delete('/deleteuser/:firstname',usercntrl.deleteuser);
-// router.put('/updateuser',usercntrl.updateuser)
-module.exports = router;
+		module.exports = router;
