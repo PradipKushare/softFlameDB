@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"mts_db.tests"}],"uuid":"ebf7306a1beb41389c95a942f9b1cd91"}
