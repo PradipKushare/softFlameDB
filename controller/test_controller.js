@@ -1,5 +1,6 @@
 const testModel = require('../model/test_modal').testModel
 
+const userAnsSchema = require('../model/user_answer_given_modal').userAnsSchema;
 
 const set_test_status= (req,res)=>{
      var profilepic = '5dd2427ca0a7e6157435ddd1';
@@ -51,6 +52,21 @@ const get_test_data = (req,res)=>{
         });
     }
 
+
+const check_stud_test_status = (req,res)=>{
+    const usranshema = new userAnsSchema();
+    userAnsSchema.findOne({ 'testId': req.body.testId,'userId':req.body.userId }, (err, quesData1) => {
+        if (err){ throw err;}
+            if (quesData1.length > 0) {
+                console.log('DATAAAAAAAAAAAAAAAA')
+                console.log(quesData1);
+                }else{
+                    console.log('NO DATAAAAAAAAA')
+                }
+            });
+        }
+
+
 const get_test_data_all = (req,res)=>{
      const test = new testModel();
    
@@ -68,5 +84,6 @@ module.exports = {
     add_test_data,
     get_test_data,
     get_test_data_all,
-    set_test_status
+    set_test_status,
+    check_stud_test_status
 }

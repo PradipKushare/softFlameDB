@@ -41,26 +41,17 @@ const save_question_answers = (req,res)=>{
 
        testreport.save((err, quesdata) => {
           if (err){ throw err;}
-            if (quesdata) {
-        
-             testModel.findOneAndUpdate({'_id': req.body.testId}, 
-                 {$set: {testStatus:req.body.testStatus }}, function(err,updateData) {
+              if (quesdata) {
                     res.json({ success:true,reportId:quesdata.testId});
-                    });
                 }else{
-                    res.json({ success:false,reportId:''});
+                      res.json({ success:false,reportId:''});
                     }
                 });
             }
         });
     }else{
-        console.log('ELSEEEEEEEEEEEEEEE')
         var funcData = JSON.parse(quesArr);
          insert_user_given_ans(funcData,tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
-            });
-
-        testModel.findOneAndUpdate({'_id': req.body.testId}, 
-            {$set: {testStatus:req.body.testStatus }}, function(err,updateData) {
             res.json({ success:true,reportId:''});
         });
     }
@@ -136,6 +127,32 @@ const get_test_report = (req,res)=>{
         });
     }
 
+
+
+    const get_test_report_subject_data = (req,res)=>{
+      const test = new testReport();
+      test.subjectName = req.body.subject;
+
+    var per_page = parseInt(req.body.per_page);
+    var page_number = req.body.page_number;
+    var from_limit =  (page_number * per_page)-per_page;
+    var countData = 0;
+
+     testReport.find({ 'subjectName': req.body.subject}).countDocuments((err, countData) => {
+            countData = countData
+     testReport.find({ 'subjectName': req.body.subject}, (err, testData) => {
+        if (err){ throw err;}
+            if (testData.length > 0) {
+                res.json({ success:true,data:testData,countData:countData,per_page:per_page });
+            }else{
+                res.json({ success:false,data:[],countData:0,per_page:0 });
+            }
+        }).sort(req.body.sort_by == 'ascending' ? {created_at: 1} : {created_at: -1})
+        .skip(from_limit).limit(per_page)
+        });
+    }
+
+
 module.exports = {
-   save_question_answers,get_test_report
+   save_question_answers,get_test_report,get_test_report_subject_data
 }

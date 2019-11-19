@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"mts_db.questiontests"}],"uuid":"631e61a87f7f4b0da20b501cbb48be6a"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"mts_db.questiontests"}],"uuid":"20ceffa8d794420e95376a02aaf21a88"}

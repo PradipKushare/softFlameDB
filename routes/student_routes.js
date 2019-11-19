@@ -29,6 +29,7 @@ var testreportCntrl = require('../controller/testreport_controller');
  router.post('/get_test_data',testCntrl.get_test_data);
  router.get('/get_test_data_all',testCntrl.get_test_data_all);
  router.get('/set_test_status',testCntrl.set_test_status);
+ router.post('/check_stud_test_status',testCntrl.check_stud_test_status);
 
 
  router.post('/add_news_data',newsPwdCntrl.add_news_data);
@@ -36,5 +37,7 @@ var testreportCntrl = require('../controller/testreport_controller');
  router.post('/get_question_test_data',maintestCntrl.get_question_test_data);
  router.post('/save_question_answers',testreportCntrl.save_question_answers);
  router.post('/get_test_report',testreportCntrl.get_test_report);
+ router.post('/get_test_report_subject_data',testreportCntrl.get_test_report_subject_data);
 
-		module.exports = router;
+
+module.exports = router;
