@@ -34,6 +34,7 @@ const register= (req,res)=>{
 
 const get_user_profile = (req,res)=>{
     var sess = req.session;
+    console.log(sess)
    var sess_user_id = localStorage.getItem('node_session_id');
     studModel.find({'_id':sess_user_id}, (err, data) => {
         if (err){ throw err;}
@@ -43,7 +44,10 @@ const get_user_profile = (req,res)=>{
 
 const get_profile_pics = (req,res)=>{
     var sess = req.session;
+        console.log(sess)
     var sess_user_id = localStorage.getItem('node_session_id');
+    console.log('sess_user_id:'+sess_user_id);
+
     studModel.find({'_id':sess_user_id}, (err, data) => {
         if (err){ throw err;}
         res.json({success : true,profilepic:data[0].profilepic})

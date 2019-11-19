@@ -27,28 +27,42 @@ const add_question_test_data = (req,res)=>{
 const get_question_test_data = (req,res)=>{
      const questiontest = new mainTestModel();
         questiontest.testId = req.body.testId;
-        questiontest.subject = req.body.subject;
         questiontest.userId = req.body.userId;
 
-        console.log('testId:'+req.body.testId);
-        console.log('subject:'+req.body.subject);
-        console.log('userId:'+req.body.userId);
+    const countData = 0;
+    const usranshema = new userAnsSchema();
+    
+    userAnsSchema.find({ 'testId': req.body.testId,'userId':req.body.userId,isCompleteTest:1 }, (err, quesData) => {
+    if (err){ throw err;}
+    if (quesData.length > 0) {
 
+         userAnsSchema.find({ 'testId': req.body.testId,'subject':req.body.subject,'userId':req.body.userId,isCompleteTest:1 }).countDocuments((err, countData) => {
+            countData = countData;
 
-
-
-/*     mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}).countDocuments((err, countData) => {
-            countData = countData
-     mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}, (err, testData) => {
-        if (err){ throw err;}
-            if (testData) {
-                res.json({ success:true,data:testData,countData:countData });
-            }else{
-                res.json({ success:false,data:[],countData:0 });
-             }
+                console.log('DDDDDDDDDDDDDDDDDDDDDDDDD');
+                console.log(quesData)
+                res.json({ success:true,data:quesData.quesData,countData:countData });
             });
-        });*/
-    }
+
+        }else{
+                console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx');
+
+        mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}).countDocuments((err, countData) => {
+                countData = countData
+        mainTestModel.find({'testId': req.body.testId,'subject':req.body.subject}, (err, testData) => {
+            if (err){ throw err;}
+                if (testData) {
+                    console.log('EEEEEEEEEEEEEEEEEEEEEE');
+                console.log(testData)
+                    res.json({ success:true,data:testData,countData:countData });
+                }else{
+                    res.json({ success:false,data:[],countData:0 });
+                    }
+                });
+            });
+        }
+    });
+}
 
     const get_all_question_test_data = (req,res)=>{
      const questiontest = new mainTestModel();

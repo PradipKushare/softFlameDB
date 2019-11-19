@@ -9,6 +9,7 @@ const UserAnswerSchema = new schema({
     isCoorectAns:{type : String},
     correctAns:{type : String},
     isCompleteTest:{type : Number},
+    quesData:[],
     created_at:{type:Date,default:Date.now}
 });
 

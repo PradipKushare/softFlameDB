@@ -11,7 +11,7 @@ const save_question_answers = (req,res)=>{
         var tmp_testStatus = req.body.testStatus;
 
         if (req.body.testStatus == 2) {
-        
+        console.log('IFFFFFFFFFFFFFFFFFFFFFFFFFFFF')
         calc_ques_marks(quesArr,tmp_testId,tmp_userId,tmp_testStatus, function(err,result){
         if (result) {
         var myRes = result.result;
@@ -54,16 +54,16 @@ const save_question_answers = (req,res)=>{
             }
         });
     }else{
+        console.log('ELSEEEEEEEEEEEEEEE')
         var funcData = JSON.parse(quesArr);
-          for(var i = 0; i < funcData.length; ++i){
-             insert_user_given_ans(funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
-                 testModel.findOneAndUpdate({'_id': req.body.testId}, 
-                 {$set: {testStatus:req.body.testStatus }}, function(err,updateData) {
-                        res.json({ success:true,reportId:quesdata.testId});
-                    });
-
+          for(var i = 0; i < funcData.length; i++){
+             insert_user_given_ans(funcData,funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
             });
          }
+        testModel.findOneAndUpdate({'_id': req.body.testId}, 
+            {$set: {testStatus:req.body.testStatus }}, function(err,updateData) {
+            res.json({ success:true,reportId:''});
+        });
     }
 }
 
@@ -75,7 +75,7 @@ const save_question_answers = (req,res)=>{
         var totalMarks = 0;
         var funcData = JSON.parse(quesArr);
 
-       for(var i = 0; i < funcData.length; ++i){
+       for(var i = 0; i < funcData.length; i++){
                 if (funcData[i].isAnswered == 'yes') {
                     if(parseInt(funcData[i].optionSelected) == parseInt(funcData[i].correctAns)){
                     correctQuestion++;
@@ -85,7 +85,7 @@ const save_question_answers = (req,res)=>{
                     negativeMarks-=1;
                     }
                 }
-        insert_user_given_ans(funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
+        insert_user_given_ans(funcData,funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
 
         });
     }
@@ -101,7 +101,7 @@ const save_question_answers = (req,res)=>{
     callback(null,{result:resultPass});
 }
 
-function insert_user_given_ans(data,tmp_testId,tmp_userId,callback) { 
+function insert_user_given_ans(funcData,data,tmp_testId,tmp_userId,tmp_testStatus,callback) { 
      const usranshema = new userAnsSchema();
         usranshema.testId = tmp_testId;
         usranshema.userId = tmp_userId;
@@ -110,6 +110,7 @@ function insert_user_given_ans(data,tmp_testId,tmp_userId,callback) {
         usranshema.isCoorectAns = data.isCoorectAns; 
         usranshema.correctAns = data.correctAns; 
         usranshema.isCompleteTest = tmp_testStatus; 
+        usranshema.quesData = funcData;
 
         usranshema.save((err, schemaData) => {
           if (err){ throw err;}

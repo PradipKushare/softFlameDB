@@ -41,7 +41,7 @@ const get_test_data = (req,res)=>{
             countData = countData
      testModel.find({ 'subjects': req.body.subject}, (err, testData) => {
         if (err){ throw err;}
-            if (testData) {
+            if (testData.length > 0) {
                 res.json({ success:true,data:testData,countData:countData,per_page:per_page });
             }else{
                 res.json({ success:false,data:[],countData:0,per_page:0 });
