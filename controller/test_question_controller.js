@@ -31,17 +31,20 @@ const get_question_test_data = (req,res)=>{
 
     const countData = 0;
     const usranshema = new userAnsSchema();
+    let tmpArr = [];
     
-    userAnsSchema.find({ 'testId': req.body.testId,'userId':req.body.userId,isCompleteTest:1 }, (err, quesData) => {
+    userAnsSchema.find({ 'testId': req.body.testId,'userId':req.body.userId,isCompleteTest:1 }, (err, quesData1) => {
     if (err){ throw err;}
-    if (quesData.length > 0) {
+    if (quesData1.length > 0) {
 
          userAnsSchema.find({ 'testId': req.body.testId,'subject':req.body.subject,'userId':req.body.userId,isCompleteTest:1 }).countDocuments((err, countData) => {
             countData = countData;
 
-                console.log('DDDDDDDDDDDDDDDDDDDDDDDDD');
-                console.log(quesData)
-                res.json({ success:true,data:quesData.quesData,countData:countData });
+                quesData1.forEach(function(data){
+                   tmpArr.push(data.quesData);
+                });
+
+                res.json({ success:true,data:tmpArr,countData:countData,tmp_test:true });
             });
 
         }else{
@@ -54,9 +57,9 @@ const get_question_test_data = (req,res)=>{
                 if (testData) {
                     console.log('EEEEEEEEEEEEEEEEEEEEEE');
                 console.log(testData)
-                    res.json({ success:true,data:testData,countData:countData });
+                    res.json({ success:true,data:testData,countData:countData,tmp_test:false });
                 }else{
-                    res.json({ success:false,data:[],countData:0 });
+                    res.json({ success:false,data:[],countData:0,tmp_test:false });
                     }
                 });
             });

@@ -56,10 +56,9 @@ const save_question_answers = (req,res)=>{
     }else{
         console.log('ELSEEEEEEEEEEEEEEE')
         var funcData = JSON.parse(quesArr);
-          for(var i = 0; i < funcData.length; i++){
-             insert_user_given_ans(funcData,funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
+         insert_user_given_ans(funcData,tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
             });
-         }
+
         testModel.findOneAndUpdate({'_id': req.body.testId}, 
             {$set: {testStatus:req.body.testStatus }}, function(err,updateData) {
             res.json({ success:true,reportId:''});
@@ -85,10 +84,12 @@ const save_question_answers = (req,res)=>{
                     negativeMarks-=1;
                     }
                 }
-        insert_user_given_ans(funcData,funcData[i],tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
+    }
+
+    insert_user_given_ans(funcData,tmp_testId,tmp_userId,tmp_testStatus, function(err,funRes){
 
         });
-    }
+
     totalMarks = parseInt(rightMarks) + parseInt(negativeMarks)
     var resultPass = {
         correctQuestion:correctQuestion,
@@ -101,23 +102,24 @@ const save_question_answers = (req,res)=>{
     callback(null,{result:resultPass});
 }
 
-function insert_user_given_ans(funcData,data,tmp_testId,tmp_userId,tmp_testStatus,callback) { 
+function insert_user_given_ans(funcData,tmp_testId,tmp_userId,tmp_testStatus,callback) { 
      const usranshema = new userAnsSchema();
         usranshema.testId = tmp_testId;
         usranshema.userId = tmp_userId;
-        usranshema.questionId = data._id;
-        usranshema.given_answer = data.optionSelected;
-        usranshema.isCoorectAns = data.isCoorectAns; 
-        usranshema.correctAns = data.correctAns; 
         usranshema.isCompleteTest = tmp_testStatus; 
         usranshema.quesData = funcData;
 
+    userAnsSchema.find({ 'testId': tmp_testId,'userId':tmp_userId,isCompleteTest:tmp_testStatus }, (err, checkRec) => {
+       if (err){ throw err;}
+         if (checkRec.length == 0) {
         usranshema.save((err, schemaData) => {
           if (err){ throw err;}
-            if (schemaData) {
              callback(null,{success:true});
-         }
-     });
+       });
+    }else{
+      callback(null,{success:true});
+    }
+  });
 }
 
 const get_test_report = (req,res)=>{
