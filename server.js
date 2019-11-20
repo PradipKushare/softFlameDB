@@ -30,6 +30,24 @@ const studRoutes = require('./routes/student_routes');
 const newsRoutes = require('./routes/news_routes');
  app.use('/news', newsRoutes);
 
+
+ const quesRoutes = require('./routes/sub_routes/question_routes');
+ app.use('/question', quesRoutes);
+
+const queOptRoutes = require('./routes/sub_routes/question_option_routes');
+ app.use('/question_option', queOptRoutes);
+ 
+ const testRoutes = require('./routes/sub_routes/test_list_routes');
+ app.use('/test_list', testRoutes);
+
+ const testQuesRoutes = require('./routes/sub_routes/test_question_routes');
+ app.use('/test_question', testQuesRoutes);
+
+
+ const userGivenTestRoutes = require('./routes/sub_routes/user_given_test_routes');
+ app.use('/user_given_test', userGivenTestRoutes);
+
+
 mongoose.Promise = global.Promise;
 console.log('connectedddddd')
 

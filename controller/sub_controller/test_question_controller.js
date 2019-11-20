@@ -1,4 +1,4 @@
-const testQuesModel = require('../model/sub_model/test_question_modal').testQuesModel
+const testQuesModel = require('../../model/sub_model/test_question_modal').testQuesModel
 
 const add_test_question = (req,res)=>{
 const test_ques = new testQuesModel();

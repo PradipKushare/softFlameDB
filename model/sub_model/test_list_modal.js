@@ -8,12 +8,11 @@ const TestSchema = new schema({
     exam_name: {type:String},
 	total_marks: {type:Number},
 	test_duration: {type:Number},
-	max_marks: {type:Number},
     total_questions: {type:Number},
     created_at:{type:Date,default:Date.now}
 });
 
 module.exports={
- testModel : mongoose.model('test' , TestSchema),
+ testModel : mongoose.model('test_list' , TestSchema),
 }
 

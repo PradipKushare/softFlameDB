@@ -1,4 +1,4 @@
-const questionModal = require('../model/sub_model/question_modal').questionModal
+const questionModal = require('../../model/sub_model/question_modal').questionModal
 const add_questions = (req,res)=>{
     const question = new questionModal();
         question.questions = req.body.questions;
