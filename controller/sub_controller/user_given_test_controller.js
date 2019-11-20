@@ -1,4 +1,4 @@
-const UserGivenTestModel = require('../../model/sub_model/test_question_modal').UserGivenTestModel
+const UserGivenTestModel = require('../../model/sub_model/user_given_test_modal').UserGivenTestModel
 
 const add_user_given_test = (req,res)=>{
 const user_given_test = new UserGivenTestModel();
